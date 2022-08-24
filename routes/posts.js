@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const post_controller = require('../controllers/postController');
 
@@ -9,7 +10,7 @@ const post_controller = require('../controllers/postController');
 router.get('/', post_controller.get_article_list);
 
 //post new article
-router.post('/', post_controller.post_new_article);
+router.post('/', passport.authenticate('jwt', {session: false}), post_controller.post_new_article);
 
 //get specific article
 router.get('/:id', post_controller.get_article_detail);
