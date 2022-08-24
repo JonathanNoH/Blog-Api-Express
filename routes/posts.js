@@ -1,32 +1,24 @@
 const express = require('express');
 const router = express.Router();
 
+const post_controller = require('../controllers/postController');
+
 // POSTS ROUTES
 
 // get list of posts/articles
-router.get('/', (req, res) => {
-  res.send('NOT IMPLEMENTED: POSTS LIST/INDEX');
-});
+router.get('/', post_controller.get_article_list);
 
 //post new article
-router.post('/', (req, res) => {
-  res.send('NOT IMPLEMENTED: POST POST REQUEST');
-});
+router.post('/', post_controller.post_new_article);
 
 //get specific article
-router.get('/:id', (req, res) => {
-  res.send('NOT IMPLEMENTED: POST DETAIL FOR ' + req.params.id);
-});
+router.get('/:id', post_controller.get_article_detail);
 
 //update specific article
-router.put('/:id', (req, res) => {
-  res.send('NOT IMPLEMENTED: UPDATE POST' + req.params.id);
-});
+router.put('/:id', post_controller.put_article_detail);
 
 //delete specific article
-router.delete('/:id', (res, res) => {
-  res.send('NOT IMPLEMENTED: DELETE POST' + req.params.id);
-});
+router.delete('/:id', post_controller.delete_article_detail);
 
 // COMMENTS ROUTES
 
@@ -49,8 +41,8 @@ router.put('/:id/comments/:cid', (req, res) => {
   res.send(`NOT IMPLEMENTED: UPDATE COMMENT ${req.params.cid} FOR POST ${req.params.id}`);
 });
 
-router.delete('/:id/comments/:cid', (req, res => {
+router.delete('/:id/comments/:cid', (req, res) => {
   res.send(`NOT IMPLEMENTED: DELETE COMMENT ${req.params.cid} FOR POST ${req.params.id}`);
-}));
+});
 
 module.exports = router;
