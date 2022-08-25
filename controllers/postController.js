@@ -5,9 +5,28 @@ const { body, validationResult } = require('express-validator');
 
 // POSTS ROUTES
 
-// get list of posts/articles
+// get all posts
 exports.get_article_list = (req, res) => {
-  res.send('NOT IMPLEMENTED: POSTS LIST/INDEX');
+  Post.find({})
+  .lean()
+  .populate('author', 'firstName lastName')
+  .sort({ timestamp: -1 })
+  .exec((err, posts) => {
+    if (err) {
+      return next(err);
+    }
+    res.json(posts);
+  })
+};
+
+//get all unpublished posts
+exports.get_unpublished_article_list = (req, res) => {
+  res.send('NOT IMPLEMENTED: GET UNPUBLISHED POSTS ALL');
+};
+
+// get list of published posts/articles
+exports.get_published_article_list = (req, res) => {
+  res.send('NOT IMPLEMENTED: GET PUBLISHED POSTS LIST/INDEX');
 };
 
 //post new article

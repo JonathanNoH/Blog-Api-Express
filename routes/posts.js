@@ -7,19 +7,25 @@ const post_controller = require('../controllers/postController');
 // POSTS ROUTES
 
 // get list of posts/articles
-router.get('/', post_controller.get_article_list);
+router.get('/', passport.authenticate('jwt', {session: false}), post_controller.get_article_list);
 
 //post new article
 router.post('/', passport.authenticate('jwt', {session: false}), post_controller.post_new_article);
+
+//get list of published articles
+router.get('/published', post_controller.get_published_article_list);
+
+// get list of unpublished articles
+router.get('/unpublished', passport.authenticate('jwt', {session: false}), post_controller.get_unpublished_article_list);
 
 //get specific article
 router.get('/:id', post_controller.get_article_detail);
 
 //update specific article
-router.put('/:id', post_controller.put_article_detail);
+router.put('/:id', passport.authenticate('jwt', {session: false}), post_controller.put_article_detail);
 
 //delete specific article
-router.delete('/:id', post_controller.delete_article_detail);
+router.delete('/:id', passport.authenticate('jwt', {session: false}), post_controller.delete_article_detail);
 
 // COMMENTS ROUTES
 
