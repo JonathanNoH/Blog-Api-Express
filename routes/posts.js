@@ -15,11 +15,14 @@ router.post('/', passport.authenticate('jwt', {session: false}), post_controller
 //get list of published articles
 router.get('/published', post_controller.get_published_article_list);
 
+//get details of published article
+router.get('/published/:id', post_controller.get_published_article_detail);
+
 // get list of unpublished articles
 router.get('/unpublished', passport.authenticate('jwt', {session: false}), post_controller.get_unpublished_article_list);
 
 //get specific article
-router.get('/:id', post_controller.get_article_detail);
+router.get('/:id', passport.authenticate('jwt', {session: false}), post_controller.get_article_detail);
 
 //update specific article
 router.put('/:id', passport.authenticate('jwt', {session: false}), post_controller.put_article_detail);

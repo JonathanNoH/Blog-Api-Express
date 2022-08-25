@@ -86,15 +86,56 @@ exports.post_new_article = [
 
 //get specific article
 exports.get_article_detail = (req, res) => {
-  res.send('NOT IMPLEMENTED: POST DETAIL FOR ' + req.params.id);
+  Post.findById(req.params.id)
+  .lean()
+  .populate('author', 'firstName lastName')
+  .exec((err, post) => {
+    if(err) {
+      return next(err);
+    }
+    res.json(post);
+  })
 };
 
+// get a specific published article
+exports.get_published_article_detail = (req, res) => {
+  Post.find({id: req.params.id, published:true})
+  .lean()
+  .populate('author', 'firstName lastName')
+  .exec((err, post) => {
+    if(err) {
+      return next(err);
+    }
+    res.json(post);
+  })
+}
+
 //update specific article
-exports.put_article_detail = (req, res) => {
-  res.send('NOT IMPLEMENTED: UPDATE POST' + req.params.id);
-};
+exports.put_article_detail = [
+
+  // Validate
+  body('title').trim().escape().isLength({ max: 150 }).withMessage('Maximum length is 150 characters for title'),
+  body('content').trim().escape(),
+
+  (req, res) => {
+  Post.findByIdAndUpdate(
+    req.params.id,
+    { title: req.body.title, content: req.body.content},
+    (err) => {
+      if (err) {
+        return next(err);
+      }
+      res.send('Success');
+    }
+  )
+}];
 
 //delete specific article
 exports.delete_article_detail = (req, res) => {
-  res.send('NOT IMPLEMENTED: DELETE POST' + req.params.id);
+  Post.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      return next(err);
+    }
+    res.send('Success');
+  });
 };
