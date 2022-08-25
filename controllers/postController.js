@@ -21,12 +21,30 @@ exports.get_article_list = (req, res) => {
 
 //get all unpublished posts
 exports.get_unpublished_article_list = (req, res) => {
-  res.send('NOT IMPLEMENTED: GET UNPUBLISHED POSTS ALL');
+  Post.find({published: false})
+  .lean()
+  .populate('author', 'firstName lastName')
+  .sort({ timestamp: -1})
+  .exec((err, posts) => {
+    if(err) {
+      return next(err);
+    }
+    res.json(posts);
+  })
 };
 
 // get list of published posts/articles
 exports.get_published_article_list = (req, res) => {
-  res.send('NOT IMPLEMENTED: GET PUBLISHED POSTS LIST/INDEX');
+  Post.find({published: true})
+  .lean()
+  .populate('author', 'firstName lastName')
+  .sort({ timestamp: -1})
+  .exec((err, posts) => {
+    if (err) {
+      return next(err);
+    }
+    res.json(posts);
+  })
 };
 
 //post new article

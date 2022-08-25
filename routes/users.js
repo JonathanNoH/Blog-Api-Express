@@ -5,7 +5,7 @@ const passport = require('passport');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.send('Something might go here.');
 });
 
 router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next) => {
