@@ -35,7 +35,7 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.SECRET;
 
 passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
-  User.findById(jwt_payload._id)
+  User.findById(jwt_payload._id, '-password')
   .exec((err, user) => {
     if (err) {
       return done(err, false);

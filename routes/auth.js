@@ -26,9 +26,12 @@ router.post('/login', (req, res, next) => {
           }
 
           //generate web token
-
-          const token = jwt.sign(user.toJSON(), process.env.SECRET, { expiresIn: '1d'});
-          return res.json({user, token});
+          const info = {
+            _id: user._id,
+            name: user.fullName,
+          }
+          const token = jwt.sign(info, process.env.SECRET, { expiresIn: '1d'});
+          return res.json({token});
         }
       );
     })(req, res);
