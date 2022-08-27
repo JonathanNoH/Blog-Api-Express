@@ -63,8 +63,15 @@ exports.post_comment = [
 ];
 
 // get comment detail
-exports.get_comment_detail = (req, res) => {
-  res.send(`NOT IMPLEMENTED: COMMENT DETAILS ${req.params.cid} FOR POST ${req.params.id}`);
+exports.get_comment_detail = (req, res, next) => {
+  Comment.findById(req.params.cid)
+  .lean()
+  .exec((err, comment) => {
+    if (err) {
+      return next(err);
+    }
+    res.json(comment);
+  });
 };
 
 // update comment
