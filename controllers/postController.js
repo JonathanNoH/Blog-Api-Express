@@ -5,7 +5,7 @@ const { body, validationResult } = require('express-validator');
 // POSTS ROUTES
 
 // get all posts
-exports.get_article_list = (req, res) => {
+exports.get_article_list = (req, res, next) => {
   Post.find({})
   .lean()
   .populate('author', 'firstName lastName')
@@ -19,7 +19,7 @@ exports.get_article_list = (req, res) => {
 };
 
 //get all unpublished posts
-exports.get_unpublished_article_list = (req, res) => {
+exports.get_unpublished_article_list = (req, res, next) => {
   Post.find({published: false})
   .lean()
   .populate('author', 'firstName lastName')
@@ -33,7 +33,7 @@ exports.get_unpublished_article_list = (req, res) => {
 };
 
 // get list of published posts/articles
-exports.get_published_article_list = (req, res) => {
+exports.get_published_article_list = (req, res, next) => {
   Post.find({published: true})
   .lean()
   .populate('author', 'firstName lastName')
@@ -84,7 +84,7 @@ exports.post_new_article = [
 ];
 
 //get specific article
-exports.get_article_detail = (req, res) => {
+exports.get_article_detail = (req, res, next) => {
   Post.findById(req.params.id)
   .lean()
   .populate('author', 'firstName lastName')
@@ -97,7 +97,7 @@ exports.get_article_detail = (req, res) => {
 };
 
 // get a specific published article
-exports.get_published_article_detail = (req, res) => {
+exports.get_published_article_detail = (req, res, next) => {
   Post.find({id: req.params.id, published:true})
   .lean()
   .populate('author', 'firstName lastName')
@@ -116,7 +116,7 @@ exports.put_article_detail = [
   body('title').trim().escape().isLength({ max: 150 }).withMessage('Maximum length is 150 characters for title'),
   body('content').trim().escape(),
 
-  (req, res) => {
+  (req, res, next) => {
   Post.findByIdAndUpdate(
     req.params.id,
     { title: req.body.title, content: req.body.content},
@@ -130,7 +130,7 @@ exports.put_article_detail = [
 }];
 
 //delete specific article
-exports.delete_article_detail = (req, res) => {
+exports.delete_article_detail = (req, res, next) => {
   Post.findByIdAndRemove(req.params.id, (err) => {
     if (err) {
       return next(err);

@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 const post_controller = require('../controllers/postController');
+const comment_controller = require('../controllers/commentController');
 
 // POSTS ROUTES
 
@@ -33,26 +34,18 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}), post_contr
 // COMMENTS ROUTES
 
 //get comments for specific article
-router.get('/:id/comments', (req, res) => {
-  res.send('NOT IMPLEMENTED: COMMENTS LIST FOR POST ' + req.params.id);
-});
+router.get('/:id/comments', comment_controller.get_comment_list);
 
 //post a comment
-router.post('/:id/comments', (req, res) => {
-  res.send('NOT IMPLEMENTED: POST A COMMENT FOR ' + req.params.id);
-});
+router.post('/:id/comments', comment_controller.post_comment);
 
-router.get('/:id/comments/:cid', (req, res) => {
-  res.send(`NOT IMPLEMENTED: COMMENT DETAILS ${req.params.cid} FOR POST ${req.params.id}`);
-});
+// get comment details
+router.get('/:id/comments/:cid', comment_controller.get_comment_detail);
 
 //update a comment
-router.put('/:id/comments/:cid', (req, res) => {
-  res.send(`NOT IMPLEMENTED: UPDATE COMMENT ${req.params.cid} FOR POST ${req.params.id}`);
-});
+router.put('/:id/comments/:cid', comment_controller.put_comment);
 
-router.delete('/:id/comments/:cid', (req, res) => {
-  res.send(`NOT IMPLEMENTED: DELETE COMMENT ${req.params.cid} FOR POST ${req.params.id}`);
-});
+//delete a comment
+router.delete('/:id/comments/:cid', comment_controller.delete_comment);
 
 module.exports = router;
