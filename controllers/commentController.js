@@ -75,11 +75,31 @@ exports.get_comment_detail = (req, res, next) => {
 };
 
 // update comment
-exports.put_comment = (req, res) => {
-  res.send(`NOT IMPLEMENTED: UPDATE COMMENT ${req.params.cid} FOR POST ${req.params.id}`);
-};
+exports.put_comment = [
+
+  body('content').trim().escape().isLength({ max: 5000}).withMessage("Comment can be no longer than 5000 characters."),
+  body('author').trim().escape().isLength({max: 200}).withMessage("Author name limit of 200 characters."),
+
+  (req, res) => {
+    Comment.findByIdAndUpdate(
+      req.params.cid,
+      {content: req.body.content, author: req.body.author},
+      (err => {
+        if (err) {
+          return next(err);
+        }
+        res.send("Success");
+      })
+    );
+  }
+];
 
 // delete comment
-exports.delete_comment = (req, res) => {
-  res.send(`NOT IMPLEMENTED: DELETE COMMENT ${req.params.cid} FOR POST ${req.params.id}`);
+exports.delete_comment = (req, res, next) => {
+  Comment.findByIdAndRemove(req.params.cid, (err) => {
+    if (err) {
+      return next(err);
+    }
+    res.send('Success');
+  });
 };

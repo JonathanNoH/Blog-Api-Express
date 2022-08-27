@@ -43,9 +43,9 @@ router.post('/:id/comments', comment_controller.post_comment);
 router.get('/:id/comments/:cid', comment_controller.get_comment_detail);
 
 //update a comment
-router.put('/:id/comments/:cid', comment_controller.put_comment);
+router.put('/:id/comments/:cid', passport.authenticate('jwt', {session: false}), comment_controller.put_comment);
 
 //delete a comment
-router.delete('/:id/comments/:cid', comment_controller.delete_comment);
+router.delete('/:id/comments/:cid', passport.authenticate('jwt', {session: false}), comment_controller.delete_comment);
 
 module.exports = router;
