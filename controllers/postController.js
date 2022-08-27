@@ -71,7 +71,6 @@ exports.post_new_article = [
         author: req.user._id,
         published: false,
         timestamp: date,
-        comments: [],
       });
       post.save(err => {
         if(err) {

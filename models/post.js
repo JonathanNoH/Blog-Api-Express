@@ -8,7 +8,6 @@ const PostSchema = new Schema(
     author: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     published: {type: Boolean, required: true},
     timestamp: {type: Date, required: true},
-    comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
   }
 );
 
