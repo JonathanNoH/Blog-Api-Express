@@ -12,6 +12,6 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
   res.send(req.user);
 });
 
-router.post('/', userController.sign_up);
+router.post('/', passport.authenticate('jwt', {session: false}), userController.sign_up);
 
 module.exports = router;
