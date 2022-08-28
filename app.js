@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 require('./passport');
 const passport = require('passport');
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
+app.use(cors());
 
 app.use('/auth', authRouter);
 app.use('/', indexRouter);
