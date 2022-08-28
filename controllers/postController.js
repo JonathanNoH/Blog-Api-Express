@@ -118,7 +118,7 @@ exports.put_article_detail = [
   (req, res, next) => {
   Post.findByIdAndUpdate(
     req.params.id,
-    { title: req.body.title, content: req.body.content},
+    { title: req.body.title, content: req.body.content, published: req.body.published},
     (err) => {
       if (err) {
         return next(err);
