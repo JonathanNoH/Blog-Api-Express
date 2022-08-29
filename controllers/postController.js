@@ -50,8 +50,8 @@ exports.get_published_article_list = (req, res, next) => {
 exports.post_new_article = [
   
   // Validate
-  body('title').trim().escape().isLength({ max: 500 }).withMessage('Maximum length is 150 characters for title'),
-  body('content').trim().escape(),
+  body('title').trim().isLength({ max: 500 }).withMessage('Maximum length is 150 characters for title'),
+  body('content').trim(),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -112,8 +112,8 @@ exports.get_published_article_detail = (req, res, next) => {
 exports.put_article_detail = [
 
   // Validate
-  body('title').trim().escape().isLength({ max: 150 }).withMessage('Maximum length is 150 characters for title'),
-  body('content').trim().escape(),
+  body('title').trim().isLength({ max: 150 }).withMessage('Maximum length is 150 characters for title'),
+  body('content').trim(),
 
   (req, res, next) => {
   Post.findByIdAndUpdate(

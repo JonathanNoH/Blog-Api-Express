@@ -18,8 +18,8 @@ exports.get_comment_list = (req, res, next) => {
 
 //post new comment
 exports.post_comment = [
-  body('content').trim().escape().isLength({ max: 5000}).withMessage("Comment can be no longer than 5000 characters."),
-  body('author').trim().escape().isLength({max: 200}).withMessage("Author name limit of 200 characters."),
+  body('content').trim().isLength({ max: 5000}).withMessage("Comment can be no longer than 5000 characters."),
+  body('author').trim().isLength({max: 200}).withMessage("Author name limit of 200 characters."),
   
   (req, res, next) => {
     // check if there is actually a valid post that they are attempting to comment on
@@ -77,8 +77,8 @@ exports.get_comment_detail = (req, res, next) => {
 // update comment
 exports.put_comment = [
 
-  body('content').trim().escape().isLength({ max: 5000}).withMessage("Comment can be no longer than 5000 characters."),
-  body('author').trim().escape().isLength({max: 200}).withMessage("Author name limit of 200 characters."),
+  body('content').trim().isLength({ max: 5000}).withMessage("Comment can be no longer than 5000 characters."),
+  body('author').trim().isLength({max: 200}).withMessage("Author name limit of 200 characters."),
 
   (req, res) => {
     Comment.findByIdAndUpdate(

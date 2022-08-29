@@ -6,9 +6,9 @@ const { body, validationResult } = require('express-validator');
 exports.sign_up = [
 
   //Validate sanitize
-  body('firstName').trim().escape().isLength({ min: 2, max: 50}).withMessage('First name can be between 2 and 50 characters.'),
-  body('lastName').trim().escape().isLength({ min: 2, max: 50}).withMessage('Last name can be between 2 and 50 characters.'),
-  body('email').escape().isEmail().normalizeEmail({gmail_remove_dots: false}).withMessage('Please enter a valid email'),
+  body('firstName').trim().isLength({ min: 2, max: 50}).withMessage('First name can be between 2 and 50 characters.'),
+  body('lastName').trim().isLength({ min: 2, max: 50}).withMessage('Last name can be between 2 and 50 characters.'),
+  body('email').isEmail().normalizeEmail({gmail_remove_dots: false}).withMessage('Please enter a valid email'),
   body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters.'),
   
   (req, res, next) => {
