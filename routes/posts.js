@@ -34,13 +34,19 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}), post_contr
 // COMMENTS ROUTES
 
 //get comments for specific article
-router.get('/:id/comments', comment_controller.get_comment_list);
+router.get('/:id/comments', passport.authenticate('jwt', {session: false}), comment_controller.get_comment_list);
+
+//get comments for published article
+router.get('/published/:id/comments', comment_controller.get_published_comment_list);
 
 //post a comment
-router.post('/:id/comments', comment_controller.post_comment);
+router.post('/:id/comments', passport.authenticate('jwt', {session: false}), comment_controller.post_comment);
+
+//post a comment for published article
+router.post('/published/:id/comments', comment_controller.post_published_comment);
 
 // get comment details
-router.get('/:id/comments/:cid', comment_controller.get_comment_detail);
+router.get('/:id/comments/:cid', passport.authenticate('jwt', {session: false}), comment_controller.get_comment_detail);
 
 //update a comment
 router.put('/:id/comments/:cid', passport.authenticate('jwt', {session: false}), comment_controller.put_comment);
